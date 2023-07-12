@@ -1,0 +1,510 @@
+"Question 1 <br>\n",
+    "Given an integer array nums of length n and an integer target, find three integers\n",
+    "in nums such that the sum is closest to the target. <br>\n",
+    "Return the sum of the three integers.\n",
+    "<br>\n",
+    "You may assume that each input would have exactly one solution. <br>\n",
+    "\n",
+    "Example 1: <br>\n",
+    "Input: nums = [-1,2,1,-4], target = 1 <br>\n",
+    "Output: 2\n",
+    "<br>\n",
+    "Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "-5.600000000000001\n"
+     ]
+    }
+   ],
+   "source": [
+    "def threeSumClosest(nums, target):\n",
+    "    n=len(nums)\n",
+    "    nums.sort()\n",
+    "    diff=20001\n",
+    "    val=0\n",
+    "    for i in range(n):\n",
+    "        a=i+1\n",
+    "        b=n-1\n",
+    "        while(a<b):\n",
+    "            cc=nums[i]+nums[a]+nums[b]\n",
+    "            kk=abs(cc-target)\n",
+    "            if(kk<diff):\n",
+    "                diff=kk\n",
+    "                val=cc\n",
+    "            if(cc==target):\n",
+    "                return target\n",
+    "            elif(cc<target):\n",
+    "                a+=1\n",
+    "            else:\n",
+    "                b-=1\n",
+    "        \n",
+    "    return val\n",
+    "\n",
+    "\n",
+    "arr = [2,34,6,-45.6]\n",
+    "t = 6\n",
+    "print(threeSumClosest(arr,t))"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Question 2 <br>\n",
+    "Given an array nums of n integers, return an array of all the unique quadruplets\n",
+    "[nums[a], nums[b], nums[c], nums[d]] such that: <br>\n",
+    "           ● 0 <= a, b, c, d < n   <br>\n",
+    "           ● a, b, c, and d are distinct.   <br>\n",
+    "           ● nums[a] + nums[b] + nums[c] + nums[d] == target  <br>\n",
+    "\n",
+    "You may return the answer in any order.   <br>\n",
+    "\n",
+    "Example 1:  <br>\n",
+    "Input: nums = [1,0,-1,0,-2,2], target = 0  <br>\n",
+    "Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]   <br>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{(-2, -1, 1, 2), (-1, 0, 0, 1), (-2, 0, 0, 2)}\n"
+     ]
+    }
+   ],
+   "source": [
+    "def fourSum(nums, target):        \n",
+    "    \n",
+    "    L, hm, res = len(nums), {}, set()\n",
+    "    for i in range(L):\n",
+    "        for j in range(i+1, L):\n",
+    "            for k in range(j+1, L):\n",
+    "                numA, numB, numC = nums[i], nums[j], nums[k]\n",
+    "                numD = (target - (numA + numB + numC)) \n",
+    "                if numD in hm and hm[numD] not in [i,j,k]: \n",
+    "                    tmp_ans = tuple(sorted([numA, numB, numC, numD]))       \n",
+    "                    res.add(tmp_ans)\n",
+    "                else:\n",
+    "                    hm[numC] = k\n",
+    "    return res\n",
+    "    \n",
+    "arr = [1,0,-1,0,-2,2]\n",
+    "t = 0\n",
+    "print(fourSum(arr,t))\n",
+    "    "
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<aside>\n",
+    "💡 **Question 3**\n",
+    "A permutation of an array of integers is an arrangement of its members into a\n",
+    "sequence or linear order.\n",
+    "\n",
+    "For example, for arr = [1,2,3], the following are all the permutations of arr:\n",
+    "[1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].\n",
+    "\n",
+    "The next permutation of an array of integers is the next lexicographically greater\n",
+    "permutation of its integer. More formally, if all the permutations of the array are\n",
+    "sorted in one container according to their lexicographical order, then the next\n",
+    "permutation of that array is the permutation that follows it in the sorted container.\n",
+    "\n",
+    "If such an arrangement is not possible, the array must be rearranged as the\n",
+    "lowest possible order (i.e., sorted in ascending order).\n",
+    "\n",
+    "● For example, the next permutation of arr = [1,2,3] is [1,3,2].\n",
+    "● Similarly, the next permutation of arr = [2,3,1] is [3,1,2].\n",
+    "● While the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not\n",
+    "have a lexicographical larger rearrangement.\n",
+    "\n",
+    "Given an array of integers nums, find the next permutation of nums.\n",
+    "The replacement must be in place and use only constant extra memory.\n",
+    "\n",
+    "**Example 1:**\n",
+    "Input: nums = [1,2,3]\n",
+    "Output: [1,3,2]\n",
+    "\n",
+    "</aside>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[1, 3, 2]\n"
+     ]
+    }
+   ],
+   "source": [
+    "def next_permutation(nums):\n",
+    "    i = len(nums) - 2\n",
+    "    while i >= 0 and nums[i + 1] <= nums[i]:\n",
+    "        i -= 1\n",
+    "    if i >= 0:\n",
+    "        j = len(nums) - 1\n",
+    "        while nums[j] <= nums[i]:\n",
+    "            j -= 1\n",
+    "        nums[i], nums[j] = nums[j], nums[i]\n",
+    "    reverse(nums, i + 1)\n",
+    " \n",
+    "def reverse(nums, start):\n",
+    "    i, j = start, len(nums) - 1\n",
+    "    while i < j:\n",
+    "        nums[i], nums[j] = nums[j], nums[i]\n",
+    "        i += 1\n",
+    "        j -= 1\n",
+    "\n",
+    "arr=[1,2,3]\n",
+    "next_permutation(arr)\n",
+    "print(arr)"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Question 4 <br>\n",
+    "Given a sorted array of distinct integers and a target value, return the index if the\n",
+    "target is found.  <br>\n",
+    "If not, return the index where it would be if it were inserted in\n",
+    "order. <br>\n",
+    "\n",
+    "You must write an algorithm with O(log n) runtime complexity. <br>\n",
+    "\n",
+    "Example 1: <br>\n",
+    "Input: nums = [1,3,5,6], target = 5 <br>\n",
+    "Output: 2 <br>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "2\n"
+     ]
+    }
+   ],
+   "source": [
+    "def searchInsert(nums, target):\n",
+    "    for i in range(len(nums)):\n",
+    "        \n",
+    "        if nums[i] == target:\n",
+    "            return i\n",
+    "            \n",
+    "        elif nums[i] > target:\n",
+    "            return i\n",
+    "\n",
+    "            \n",
+    "    return len(nums)\n",
+    "\n",
+    "arr = [1,9,18]\n",
+    "print(searchInsert(arr,12))"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<aside>\n",
+    "💡 **Question 5**\n",
+    "You are given a large integer represented as an integer array digits, where each\n",
+    "digits[i] is the ith digit of the integer. The digits are ordered from most significant\n",
+    "to least significant in left-to-right order. The large integer does not contain any\n",
+    "leading 0's.\n",
+    "\n",
+    "Increment the large integer by one and return the resulting array of digits.\n",
+    "\n",
+    "**Example 1:**\n",
+    "Input: digits = [1,2,3]\n",
+    "Output: [1,2,4]\n",
+    "\n",
+    "**Explanation:** The array represents the integer 123.\n",
+    "Incrementing by one gives 123 + 1 = 124.\n",
+    "Thus, the result should be [1,2,4].\n",
+    "\n",
+    "</aside>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[1, 0, 0, 0, 0]\n"
+     ]
+    }
+   ],
+   "source": [
+    "def plusOne( digits):\n",
+    "    size = len(digits)-1;\n",
+    "    for num in range(size, -1, -1) :\n",
+    "        if(num == 0):\n",
+    "            if(digits[num]==9):\n",
+    "                digits[num] = 0;\n",
+    "                digits.insert(0,1);\n",
+    "            else:\n",
+    "                digits[num]  =digits[num] + 1;\n",
+    "                break;\n",
+    "        else:\n",
+    "            if(digits[num]==9):\n",
+    "                digits[num] = 0;\n",
+    "            else:\n",
+    "                digits[num]  =digits[num] + 1;\n",
+    "                break;\n",
+    "    return  digits;\n",
+    "\n",
+    "arr = [9, 9, 9, 9]\n",
+    "print(plusOne(arr))"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Question 6 <br>\n",
+    "Given a non-empty array of integers nums, every element appears twice except\n",
+    "for one. Find that single one. <br>\n",
+    "\n",
+    "You must implement a solution with a linear runtime complexity and use only\n",
+    "constant extra space. <br>\n",
+    "\n",
+    "Example 1: <br>\n",
+    "Input: nums = [2,2,1] <br>\n",
+    "Output: 1 <br>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "7\n"
+     ]
+    }
+   ],
+   "source": [
+    "def singleNumber(nums):\n",
+    "    ans = 0\n",
+    "    for i in nums:\n",
+    "        ans =  ans^i\n",
+    "\n",
+    "    return ans\n",
+    "\n",
+    "arr = [1,1,2,2,5,5,7]\n",
+    "print(singleNumber(arr))"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Question 7 <br>\n",
+    "You are given an inclusive range [lower, upper] and a sorted unique integer array\n",
+    "nums, where all elements are within the inclusive range. <br>\n",
+    "\n",
+    "A number x is considered missing if x is in the range [lower, upper] and x is not in\n",
+    "nums. <br>\n",
+    "\n",
+    "Return the shortest sorted list of ranges that exactly covers all the missing\n",
+    "numbers. That is, no element of nums is included in any of the ranges, and each\n",
+    "missing number is covered by one of the ranges. <br>\n",
+    "\n",
+    "Example 1:  <br>\n",
+    "Input: nums = [0,1,3,50,75], lower = 0, upper = 99  <br>\n",
+    "Output: [[2,2],[4,49],[51,74],[76,99]]  <br>\n",
+    "\n",
+    "Explanation: The ranges are:  <br>\n",
+    "[2,2] <br>\n",
+    "[4,49] <br>\n",
+    "[51,74] <br>\n",
+    "[76,99] <br>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['2->4', '6->48', '50->97', '99']\n"
+     ]
+    }
+   ],
+   "source": [
+    "from itertools import pairwise\n",
+    "\n",
+    "\n",
+    "def findMissingRanges(nums, lower, upper) :\n",
+    "    def f(a, b):\n",
+    "        return str(a) if a == b else f'{a}->{b}'\n",
+    "\n",
+    "    n = len(nums)\n",
+    "    if n == 0:\n",
+    "        return [f(lower, upper)]\n",
+    "    ans = []\n",
+    "    if nums[0] > lower:\n",
+    "        ans.append(f(lower, nums[0] - 1))\n",
+    "    for a, b in pairwise(nums):\n",
+    "        if b - a > 1:\n",
+    "            ans.append(f(a + 1, b - 1))\n",
+    "    if nums[-1] < upper:\n",
+    "        ans.append(f(nums[-1] + 1, upper))\n",
+    "    return ans\n",
+    "\n",
+    "arr=[0,1,5,49,98]\n",
+    "l = 0\n",
+    "h = 99\n",
+    "print(findMissingRanges(arr,l,h))"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<aside>\n",
+    "💡 **Question 8**\n",
+    "Given an array of meeting time intervals where intervals[i] = [starti, endi],\n",
+    "determine if a person could attend all meetings.\n",
+    "\n",
+    "**Example 1:**\n",
+    "Input: intervals = [[0,30],[5,10],[15,20]]\n",
+    "Output: false\n",
+    "\n",
+    "</aside>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 113,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n"
+     ]
+    }
+   ],
+   "source": [
+    "class meeting:\n",
+    "\n",
+    "\tdef __init__(self, start, end):\n",
+    "\n",
+    "\t\tself.start = start\n",
+    "\t\tself.end = end\n",
+    "\n",
+    "\n",
+    "\n",
+    "def maxMeeting(l, N):\n",
+    "\n",
+    "\t\n",
+    "\n",
+    "\tl.sort(key=lambda x: x.end)\n",
+    "\n",
+    "\t\n",
+    "\ttime_limit = l[0].end\n",
+    "\n",
+    "\tfor i in range(1, N):\n",
+    "\t\tif l[i].start > time_limit:\n",
+    "\t\t\treturn True\n",
+    "\t\telse:\n",
+    "\t\t\treturn False\n",
+    "        \n",
+    "            \n",
+    "\n",
+    "        \n",
+    "\t\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "if __name__ == '__main__':\n",
+    "\n",
+    "\t# Starting time\n",
+    "\ts = [1, 8]\n",
+    "\n",
+    "\t# Finish time\n",
+    "\tf = [2, 8]\n",
+    "\n",
+    "\t# Number of meetings.\n",
+    "\tN = len(s)\n",
+    "\n",
+    "\tl = []\n",
+    "\n",
+    "\tfor i in range(N):\n",
+    "\n",
+    "\t\tl.append(meeting(s[i], f[i]))\n",
+    "\n",
+    "\n",
+    "\tprint(maxMeeting(l, N))\n",
+    "\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.11"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
